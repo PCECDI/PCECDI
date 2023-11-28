@@ -19,7 +19,6 @@
 #include <QDateTime>
 #include <QPalette>
 #include <QShortcut>
-#include <QDebug>
 #include <QComboBox>
 #include <fcntl.h>
 #include "SettingsUI.h"

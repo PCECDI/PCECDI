@@ -9,8 +9,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     MainWindow MainUI;
     QSplashScreen Splash;
-    QPixmap SplashScreen(":/Images/SplashScreen.png");
-    Splash.setPixmap(SplashScreen);
+    Splash.setPixmap(QPixmap(":/Images/SplashScreen.png"));
     Splash.show();
     Sleep(3000);
     MainUI.showMaximized();
