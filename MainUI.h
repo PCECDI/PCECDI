@@ -319,7 +319,7 @@ private slots:
                 QTextStream hellostream(&CSVFile);
                 hellostream<<line;
                 CSVFile.close();
-                TextEdit1->append(QString("[PCECDI] [%1] Élève %2 %3 en %4 à %5, le %6. Qui est venu(e) pour %7 enregistré(e) avec succès !").arg(heurelog).arg(nom).arg(prenom).arg(classe).arg(ProgTime2).arg(ProgDate2).arg(raison));
+                TextEdit1->append(QString("[PCECDI] [%1] Élève %2 %3 en %4 à %5, le %6. Qui est venu(e) pour %7 enregistré(e) avec succès !").arg(heurelog, nom, prenom, classe, ProgTime2, ProgDate2, raison));
                 ResetFields();
             }
         }
