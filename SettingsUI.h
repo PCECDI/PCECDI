@@ -63,7 +63,7 @@ private:
         OpenDirExeButton = new QPushButton("Ouvrir le dossier de l'éxecutable", this);
         AboutQt = new QPushButton("À Propos de Qt", this);
         TitleandIcon = new QLabel(this);
-        Credits = new QLabel("Ce programme a été créé pour le CDI par Michel Durand.\nMerci à Mme Noiret pour l'idée de ce projet.\nL'image de fond d'écran a été\nprise sur : URL.\nCe programme a été créé avec Qt. Pour plus d'info :\n", this);
+        Credits = new QLabel("Ce programme a été créé pour le CDI par Michel Durand.\nMerci à Mme Noiret pour l'idée de ce projet.\nL'image de fond d'écran a été\nprise sur : https://pxhere.com/fr/photo/1593135.\nCe programme a été créé avec Qt. Pour plus d'info :\n", this);
         TitleandIcon->setPixmap(QPixmap(":/Images/TitleWithIcon.png"));
         TitleandIcon->setFixedSize(326, 42);
         TextEdit2->setFixedSize(250, 100);
