@@ -17,6 +17,7 @@
 #include <QIcon>
 #include <QTime>
 #include <QDateTime>
+#include <QPalette>
 #include <QShortcut>
 #include <QDebug>
 #include <QComboBox>
@@ -132,11 +133,17 @@ private:
         setWindowTitle("PCECDI");
         setMinimumSize(820, 450);
         TextEdit1->append("[PCECDI] Le programme s'est lancé avec succès. ");
+
+        QPixmap bkgnd(":/Images/WallPaper.jpg");
+        bkgnd = bkgnd.scaled(screen->size(), Qt::IgnoreAspectRatio);
+        QPalette palette;
+        palette.setBrush(QPalette::Window, bkgnd);
+        this->setPalette(palette);
     }
 
     void connectButtons()
     {
-        QObject::connect(QuitButton, SIGNAL(clicked()), this, SLOT(quit()));
+        QObject::connect(QuitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
         QObject::connect(ApplyButton, SIGNAL(clicked()), this, SLOT(Register()));
         QObject::connect(ToolsButton, SIGNAL(clicked()), this, SLOT(LaunchSettingsUI()));
         QObject::connect(shortcutMed, SIGNAL(activated()), this, SLOT(Settings()));
@@ -177,7 +184,7 @@ private:
 private slots:
     void LaunchSettingsUI()
     {
-        settings.move();
+        settings.move(screenWidth/2-150, screenHeight/2-200);
         settings.ResetFieldsSettings();
         settings.show();
     }
@@ -202,11 +209,6 @@ private slots:
             message->setText("<b>ATTENTION</b> : Le Mode Developpeur est désactivé !");
             message->show();
         }
-    }
-
-    void quit()
-    {
-        QApplication::quit();
     }
 
     void Register()
