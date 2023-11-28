@@ -14,6 +14,7 @@
 #include <QFile>
 #include <QDir>
 #include <QDate>
+#include <QInputDialog>
 #include <QIcon>
 #include <QTime>
 #include <QDateTime>
@@ -212,6 +213,8 @@ private slots:
 
     void Register()
     {
+        bool ok;
+
         QDateTime *DateWithTime = new QDateTime(QDateTime::currentDateTime());
         QTime ProgTime = DateWithTime->time();
         QDate ProgDate = DateWithTime->date();
@@ -263,6 +266,14 @@ private slots:
         nom.remove(";");
         prenom.remove(";");
         classe.remove(";");
+        if(raison == "Travailler sur les postes" || raison == "Se connecter à l'ENT")
+        {
+            int numposte = QInputDialog::getInt(this, tr("Numéro de Poste"), tr("Entre ton numéro de poste :"), 1, 1, 13, 1, &ok);
+            if (ok && !numposte == 0)
+            {
+                raison = QString("%1 poste : %2").arg(raison).arg(numposte);
+            }
+        }
 
         QFile CSVFile(QDir::currentPath() + "/CSVFiles/" + CSVFileName);
         if(!CSVFile.open(QIODevice::ReadOnly | QIODevice::Text))
