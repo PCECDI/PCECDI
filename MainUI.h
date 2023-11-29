@@ -164,6 +164,7 @@ private:
         ComboBox1->addItem("Travailler sur les postes");
         ComboBox1->addItem("Dessiner");
         ComboBox1->addItem("Apprendre");
+        ComboBox1->addItem("Lire");
         ComboBox1->addItem("Faire un exposé");
         ComboBox1->addItem("Voir des exposés");
         ComboBox1->addItem("Jouer au jeux de sociétés");
