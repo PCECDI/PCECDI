@@ -49,21 +49,17 @@ private:
     QTextEdit *TextEdit1;
     QPushButton *QuitButton;
     QPushButton *ApplyButton;
-    QRect  screenGeometry;
     QPushButton *ToolsButton;
+    QRect screenGeomerty;
     QScreen *screen;
     QLabel *Spacer;
     QLabel *Title;
-    int gh;
-    int screenWidth;
-    int screenHeight;
+    int ToolsWidowStatus;
 
     void setupUI()
     {
         screen = QGuiApplication::primaryScreen();
-        screenGeometry = screen->geometry();
-        screenHeight = screenGeometry.height();
-        screenWidth = screenGeometry.width();
+        screenGeomerty = screen->geometry();
 
         QWidget *window = new QWidget;
         QIcon progIcon(":/Images/Icon.png");
@@ -93,7 +89,7 @@ private:
         Title->setFixedSize(342, 71);
         TextEdit1->setFixedSize(800, 150);
 
-        gh = 0;
+        ToolsWidowStatus = 0;
         ToolsButton->setDisabled(1);
         ResetFields();
         TextEdit1->setReadOnly(1);
@@ -179,21 +175,22 @@ private:
         ComboBox1->addItem("Aider des élèves");
         ComboBox1->addItem("Venir en tant que délégué CDI");
         ComboBox1->addItem("Faire du théâtre");
+        ComboBox1->addItem("Aider Mme Noiret");
     }
 
 private slots:
     void LaunchSettingsUI()
     {
-        settings.move(screenWidth/2-150, screenHeight/2-200);
+        settings.move(screenGeomerty.width()/2-200, screenGeomerty.height()/2-150);
         settings.ResetFieldsSettings();
         settings.show();
     }
 
     void Settings()
     {
-        if(gh == 0)
+        if(ToolsWidowStatus == 0)
         {
-            gh = 1;
+            ToolsWidowStatus = 1;
             ToolsButton->setEnabled(1);
             QMessageBox *message = new QMessageBox(this);
             message->setWindowTitle("Dev Mode");
@@ -202,7 +199,7 @@ private slots:
         }
         else
         {
-            gh = 0;
+            ToolsWidowStatus = 0;
             ToolsButton->setDisabled(1);
             QMessageBox *message = new QMessageBox(this);
             message->setWindowTitle("Dev Mode");
@@ -228,26 +225,26 @@ private slots:
         int compmin = ProgTime.minute();
         switch(compheure)
         {
-            case 7:
+            case '7':
                 ProgTime2 = QString("7:20 - 8:20");
 
-            case 8:
+            case '8':
                 if(compmin < 20) ProgTime2 = QString("7:20 - 8:20");
                 if(compmin >= 20) ProgTime2 = QString("8:20 - 9:20");
 
-            case 9:
+            case '9':
                 if(compmin < 20) ProgTime2 = QString("8:20 - 9:20");
                 if(compmin >= 20) ProgTime2 = QString("9:20 - 10:20");
 
-            case 10:
+            case '10':
                 if(compmin < 20) ProgTime2 = QString("9:20 - 10:20");
                 if(compmin >= 35) ProgTime2 = QString("10:20 - 11:35");
 
-            case 11:
+            case '11':
                 if(compmin < 35) ProgTime2 = QString("10:20 - 11:35");
                 if(compmin >= 35) ProgTime2 = QString("11:35 - 12:35");
 
-            case 12:
+            case '12':
                 if(compmin < 35) ProgTime2 = QString("11:35 - 12:35");
                 if(compmin >= 35) ProgTime2 = QString("12:35 - 13:00");
 
@@ -266,14 +263,6 @@ private slots:
         nom.remove(";");
         prenom.remove(";");
         classe.remove(";");
-        if(raison == "Travailler sur les postes" || raison == "Se connecter à l'ENT")
-        {
-            int numposte = QInputDialog::getInt(this, tr("Numéro de Poste"), tr("Entre ton numéro de poste :"), 1, 1, 13, 1, &ok);
-            if (ok && !numposte == 0)
-            {
-                raison = QString("%1 poste : %2").arg(raison).arg(numposte);
-            }
-        }
 
         QFile CSVFile(QDir::currentPath() + "/CSVFiles/" + CSVFileName);
         if(!CSVFile.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -311,11 +300,23 @@ private slots:
             }
             else
             {
+                if(raison == "Travailler sur les postes" || raison == "Se connecter à l'ENT")
+                {
+                    int numposte = QInputDialog::getInt(this, tr("Numéro de Poste"), tr("Entre ton numéro de poste :"), 1, 1, 9, 1, &ok);
+                    if (ok && !numposte == 0)
+                    {
+                        raison = QString("%1 - poste : %2").arg(raison).arg(numposte);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
                 CSVFile.close();
                 CSVFile.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Append);
                 QString line = ProgTime2 + "," + ProgDate2 + "," + nom + "," + prenom + "," + classe + "," + raison + "\n";
-                QString heurelog = QString("%1:%2:%3").arg(compheure).arg(compmin).arg(compsec);
-                qDebug()<<line;
+                QString heurelog = QString("%1:%2:%3").arg(compheure, 2, 10, QChar('0')).arg(compmin, 2, 10, QChar('0')).arg(compsec, 2, 10, QChar('0'));
                 QTextStream hellostream(&CSVFile);
                 hellostream<<line;
                 CSVFile.close();

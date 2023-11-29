@@ -14,6 +14,7 @@
 #include <QScreen>
 #include <QHBoxLayout>
 #include <QDir>
+#include <QRect>
 #include <fcntl.h>
 
 class SettingsUI : public QWidget
@@ -34,7 +35,9 @@ public:
     void ResetFieldsSettings()
     {
         TextEdit2->setText(QDir::currentPath() + "/CSVFiles");
+        tabWidget->setCurrentIndex(0);
     }
+
 
 private:
     QWidget *GeneralTab;
@@ -66,6 +69,7 @@ private:
         Credits = new QLabel("Ce programme a été créé pour le CDI par Michel Durand.\nMerci à Mme Noiret pour l'idée de ce projet.\nL'image de fond d'écran a été\nprise sur : https://pxhere.com/fr/photo/1593135.\nCe programme a été créé avec Qt. Pour plus d'info :\n", this);
         TitleandIcon->setPixmap(QPixmap(":/Images/TitleWithIcon.png"));
         TitleandIcon->setFixedSize(326, 42);
+        setFixedSize(400, 300);
         TextEdit2->setFixedSize(250, 100);
         AboutTab = new QWidget;
         GeneralTab = new QWidget;
@@ -95,7 +99,6 @@ private:
         ResetFieldsSettings();
         setWindowTitle("Dev Mode");
         setWindowIcon(QIcon(":/Images/Icon.png"));
-        setFixedSize(400, 300);
     }
 
     void connectButtons()
