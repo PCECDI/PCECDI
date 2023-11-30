@@ -224,33 +224,41 @@ private slots:
         int compsec = ProgTime.second();
         int compheure = ProgTime.hour();
         int compmin = ProgTime.minute();
-        switch(compheure)
+        if(compheure >= 13)
         {
-            case 7:
+            ProgTime2 = QString("%1:00 - %2:00").arg(compheure).arg(compheure+1);
+        }
+        else
+        {
+            if(compheure == 7)
+            {
                 ProgTime2 = QString("7:20 - 8:20");
-
-            case 8:
+            }
+            if(compheure == 8)
+            {
                 if(compmin < 20) ProgTime2 = QString("7:20 - 8:20");
                 if(compmin >= 20) ProgTime2 = QString("8:20 - 9:20");
-
-            case 9:
+            }
+            if(compheure == 9)
+            {
                 if(compmin < 20) ProgTime2 = QString("8:20 - 9:20");
                 if(compmin >= 20) ProgTime2 = QString("9:20 - 10:20");
-
-            case 10:
+            }
+            if(compheure == 10)
+            {
                 if(compmin < 20) ProgTime2 = QString("9:20 - 10:20");
                 if(compmin >= 35) ProgTime2 = QString("10:20 - 11:35");
-
-            case 11:
+            }
+            if(compheure == 11)
+            {
                 if(compmin < 35) ProgTime2 = QString("10:20 - 11:35");
                 if(compmin >= 35) ProgTime2 = QString("11:35 - 12:35");
-
-            case 12:
+            }
+            if(compheure == 12)
+            {
                 if(compmin < 35) ProgTime2 = QString("11:35 - 12:35");
                 if(compmin >= 35) ProgTime2 = QString("12:35 - 13:00");
-
-            default :
-                ProgTime2 = QString("%1:00 - %2:00").arg(compheure).arg(compheure+1);
+            }
         }
 
         QString nom = NomLineEdit->text();
