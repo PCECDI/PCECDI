@@ -177,6 +177,7 @@ private:
         ComboBox1->addItem("Venir en tant que délégué CDI");
         ComboBox1->addItem("Faire du théâtre");
         ComboBox1->addItem("Aider Mme Noiret");
+        ComboBox1->addItem("Exclusion");
     }
 
 private slots:
