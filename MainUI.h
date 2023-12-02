@@ -225,41 +225,42 @@ private slots:
         int compsec = ProgTime.second();
         int compheure = ProgTime.hour();
         int compmin = ProgTime.minute();
-        if(compheure >= 13)
+
+        switch (compheure)
         {
-            ProgTime2 = QString("%1:00 - %2:00").arg(compheure).arg(compheure+1);
-        }
-        else
-        {
-            if(compheure == 7)
-            {
+            case 7:
                 ProgTime2 = QString("7:20 - 8:20");
-            }
-            if(compheure == 8)
-            {
+                break;
+
+            case 8:
                 if(compmin < 20) ProgTime2 = QString("7:20 - 8:20");
                 if(compmin >= 20) ProgTime2 = QString("8:20 - 9:20");
-            }
-            if(compheure == 9)
-            {
+                break;
+
+            case 9:
                 if(compmin < 20) ProgTime2 = QString("8:20 - 9:20");
                 if(compmin >= 20) ProgTime2 = QString("9:20 - 10:20");
-            }
-            if(compheure == 10)
-            {
+                break;
+
+            case 10:
                 if(compmin < 20) ProgTime2 = QString("9:20 - 10:20");
                 if(compmin >= 35) ProgTime2 = QString("10:20 - 11:35");
-            }
-            if(compheure == 11)
-            {
+                break;
+
+            case 11:
                 if(compmin < 35) ProgTime2 = QString("10:20 - 11:35");
                 if(compmin >= 35) ProgTime2 = QString("11:35 - 12:35");
-            }
-            if(compheure == 12)
-            {
+                break;
+
+            case 12:
+                TextEdit1->append("Hello !");
                 if(compmin < 35) ProgTime2 = QString("11:35 - 12:35");
                 if(compmin >= 35) ProgTime2 = QString("12:35 - 13:00");
-            }
+                break;
+
+            default:
+                ProgTime2 = QString("%1:00 - %2:00").arg(compheure).arg(compheure+1);
+                break;
         }
 
         QString nom = NomLineEdit->text();
