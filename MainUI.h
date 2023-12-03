@@ -45,12 +45,12 @@ private:
     QLineEdit *PrenomLineEdit;
     QLineEdit *ClasseLineEdit;
     QShortcut *shortcutMed;
+    QShortcut *shortcutFlemme;
     QComboBox *ComboBox1;
     QTextEdit *TextEdit1;
     QPushButton *QuitButton;
     QPushButton *ApplyButton;
     QPushButton *ToolsButton;
-    QRect screenGeomerty;
     QScreen *screen;
     QLabel *Spacer;
     QLabel *Title;
@@ -59,7 +59,13 @@ private:
     void setupUI()
     {
         screen = QGuiApplication::primaryScreen();
-        screenGeomerty = screen->geometry();
+
+        QFile FileSettings("Settings/file.txt");
+        FileSettings.open(QIODevice::ReadOnly);
+        QByteArray data3;
+        data3 = FileSettings.readAll();
+        FileSettings.close();
+        QString data4 = QString("%1").arg(data3);
 
         QWidget *window = new QWidget;
         QIcon progIcon(":/Images/Icon.png");
@@ -70,7 +76,8 @@ private:
         QuitButton = new QPushButton("Quitter", this);
         ApplyButton = new QPushButton("Enregistrer", this);
         ToolsButton = new QPushButton("Outils", this);
-        shortcutMed = new QShortcut(QKeySequence(tr("Ctrl+M, Ctrl+E, Ctrl+D")), this);
+        shortcutMed = new QShortcut(QKeySequence(data4), this);
+        shortcutFlemme = new QShortcut(QKeySequence(tr("Ctrl+M, Ctrl+I, Ctrl+C, Ctrl+H")), this);
         ComboBox1 = new QComboBox(this);
         Spacer = new QLabel(this);
         Title = new QLabel(this);
@@ -143,6 +150,7 @@ private:
         QObject::connect(ApplyButton, SIGNAL(clicked()), this, SLOT(Register()));
         QObject::connect(ToolsButton, SIGNAL(clicked()), this, SLOT(LaunchSettingsUI()));
         QObject::connect(shortcutMed, SIGNAL(activated()), this, SLOT(Settings()));
+        QObject::connect(shortcutFlemme, SIGNAL(activated()), this, SLOT(Mich()));
     }
 
     void RebootRegister()
@@ -181,9 +189,17 @@ private:
     }
 
 private slots:
+    void Mich()
+    {
+        NomLineEdit->setText("Durand");
+        PrenomLineEdit->setText("Michel");
+        ClasseLineEdit->setText("4C");
+        ComboBox1->setCurrentIndex(0);
+    }
+
     void LaunchSettingsUI()
     {
-        settings.move(screenGeomerty.width()/2-200, screenGeomerty.height()/2-150);
+        settings.move(screen->geometry().width()/2 - settings.width()/2, screen->geometry().height()/2 - settings.height()/2);
         settings.ResetFieldsSettings();
         settings.show();
     }
