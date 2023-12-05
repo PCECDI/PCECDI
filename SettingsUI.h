@@ -240,14 +240,28 @@ private:
         ShortMedCombo3->addItem("Z");
 
         QFile FileSettings("Settings/file.txt");
-        FileSettings.open(QIODevice::ReadOnly);
-        QByteArray data;
-        data = FileSettings.readAll();
-        FileSettings.close();
-        QString data2 = QString("%1").arg(data);
-        ShortMedCombo1->setCurrentText(data2[5]);
-        ShortMedCombo2->setCurrentText(data2[13]);
-        ShortMedCombo3->setCurrentText(data2[21]);
+        QString data2;
+        if(FileSettings.open(QIODevice::ReadOnly))
+        {
+            QByteArray data;
+            data = FileSettings.readAll();
+            data2 = QString(data);
+            FileSettings.close();
+        }
+        else
+        {
+            mkdir("Settings");
+            creat("Settings/file.txt", 0777);
+            FileSettings.open(QIODevice::ReadWrite);
+            QTextStream hello(&FileSettings);
+            hello<<"Ctrl+M, Ctrl+E, Ctrl+D";
+            data2 = "Ctrl+M, Ctrl+E, Ctrl+D";
+            FileSettings.close();
+        }
+
+        ShortMedCombo1->setCurrentText(data2.at(5));
+        ShortMedCombo2->setCurrentText(data2.at(13));
+        ShortMedCombo3->setCurrentText(data2.at(21));
     }
 
     void applyFunc()
