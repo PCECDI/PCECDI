@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QLineEdit>
-#include <QCoreApplication>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -137,8 +136,6 @@ private:
         setWindowTitle("PCECDI");
         setMinimumSize(820, 450);
         TextEdit1->append("[PCECDI] Le programme s'est lancé avec succès. ");
-
-        QCoreApplication::setApplicationVersion("3");
 
         QPixmap bkgnd(":/Images/WallPaper.jpg");
         bkgnd = bkgnd.scaled(screen->size(), Qt::IgnoreAspectRatio);
