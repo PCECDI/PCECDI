@@ -25,7 +25,7 @@ class SettingsUI : public QWidget
     Q_OBJECT
 
 public:
-    SettingsUI(QWidget *parent = nullptr)
+    SettingsUI()
     {
         setupUI();
         connectButtons();
@@ -90,9 +90,9 @@ private:
         OpenDirExeButton = new QPushButton("Ouvrir le dossier de l'éxecutable", this);
         AboutQt = new QPushButton("À Propos de Qt", this);
         TitleandIcon = new QLabel(this);
-        Credits = new QLabel("Ce programme a été créé pour le CDI par Michel Durand.\nMerci à Mme Noiret pour l'idée de ce projet.\nL'image de fond d'écran a été\nprise sur : https://pxhere.com/fr/photo/1593135.\nCe programme a été créé avec Qt. Pour plus d'info :\n", this);
+        Credits = new QLabel("Ce programme a été créé pour le CDI par Michel Durand.\nMerci à Mme Noiret pour l'idée de ce projet.\nL'image de fond d'écran a été\nprise sur : https://pxhere.com/fr/photo/1593135.\nCe programme est entièrement en Français le système pour changer la\nlangue arrivera dans une version suivante.\nCe programme a été créé avec Qt. Pour plus d'info :\n", this);
         TitleandIcon->setPixmap(QPixmap(":/Images/TitleWithIcon.png"));
-        TitleandIcon->setFixedSize(326, 42);
+        //TitleandIcon->setFixedSize(236, 42);
         setFixedSize(421, 360);
         TextEdit2->setFixedSize(250, 100);
         AboutTab = new QWidget;
@@ -101,12 +101,12 @@ private:
         OKButton->setFixedWidth(75);
         ApplyButton = new QPushButton("Appliquer", this);
         ApplyButton->setFixedWidth(75);
-        RestartButton = new QPushButton("Redémarer", this);
+        RestartButton = new QPushButton("Annuler", this);
         RestartButton->setFixedWidth(75);
         CreditsShort = new QLabel("Par Michel Durand", this);
         tabWidget = new QTabWidget(this);
-        tabWidget->addTab(GeneralTab, "General");
-        tabWidget->addTab(AboutTab, "About");
+        tabWidget->addTab(GeneralTab, "Général");
+        tabWidget->addTab(AboutTab, "À Propos");
         setLayout(settingsLayout);
         settingsLayout->addWidget(tabWidget);
         settingsLayout->addLayout(settingsLayoutH);
@@ -135,10 +135,12 @@ private:
         LayoutHGroup1->addWidget(ShortMedCombo3, 93);
         GroupBox1->setLayout(LayoutHGroup1);
         GroupBox2->setLayout(LayoutGroup2);
+        Credits->setAlignment(Qt::AlignHCenter);
+        TitleandIcon->setAlignment(Qt::AlignHCenter);
+        settingsAboutLayout->setSpacing(30);
 
-        ResetMedCombo();
-        ResetFieldsSettings();
-        setWindowTitle("Dev Mode");
+        //ResetFieldsSettings();
+        setWindowTitle("Outils");
         setWindowIcon(QIcon(":/Images/Icon.png"));
     }
 
@@ -150,6 +152,9 @@ private:
         QObject::connect(OpenDirCSVButton, SIGNAL(clicked()), this, SLOT(OpenCSVFile()));
         QObject::connect(OpenDirExeButton, SIGNAL(clicked()), this, SLOT(OpenExeFile()));
         QObject::connect(AboutQt, SIGNAL(clicked()), qApp, SLOT(aboutQt()));
+        QObject::connect(ShortMedCombo1, SIGNAL(currentTextChanged(QString)), this, SLOT(EnableApply()));
+        QObject::connect(ShortMedCombo2, SIGNAL(currentTextChanged(QString)), this, SLOT(EnableApply()));
+        QObject::connect(ShortMedCombo3, SIGNAL(currentTextChanged(QString)), this, SLOT(EnableApply()));
     }
 
     void ResetMedCombo()
@@ -241,27 +246,16 @@ private:
 
         QFile FileSettings("Settings/file.txt");
         QString data2;
-        if(FileSettings.open(QIODevice::ReadOnly))
-        {
-            QByteArray data;
-            data = FileSettings.readAll();
-            data2 = QString(data);
-            FileSettings.close();
-        }
-        else
-        {
-            mkdir("Settings");
-            creat("Settings/file.txt", 0777);
-            FileSettings.open(QIODevice::ReadWrite);
-            QTextStream hello(&FileSettings);
-            hello<<"Ctrl+M, Ctrl+E, Ctrl+D";
-            data2 = "Ctrl+M, Ctrl+E, Ctrl+D";
-            FileSettings.close();
-        }
+        FileSettings.open(QIODevice::ReadOnly);
+        QByteArray data;
+        data = FileSettings.readAll();
+        data2 = QString(data);
+        FileSettings.close();
 
         ShortMedCombo1->setCurrentText(data2.at(5));
         ShortMedCombo2->setCurrentText(data2.at(13));
         ShortMedCombo3->setCurrentText(data2.at(21));
+        ApplyButton->setDisabled(1);
     }
 
     void applyFunc()
@@ -284,9 +278,15 @@ private:
             stream<<gkjgfkugdkufgkhfkh;
             FileSettings.close();
         }
+        ApplyButton->setDisabled(1);
     }
 
 private slots:
+    void EnableApply()
+    {
+        ApplyButton->setEnabled(1);
+    }
+
     void apply()
     {
         applyFunc();
@@ -295,14 +295,12 @@ private slots:
     void quit()
     {
         applyFunc();
-        hide();
+        close();
     }
 
     void restart()
     {
-        applyFunc();
-        qApp->quit();
-        QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+        close();
     }
 
     void OpenExeFile()

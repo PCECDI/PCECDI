@@ -17,7 +17,6 @@ HEADERS += \
 
 RESOURCES += \
     Ressources/Ressources.qrc
-    PCECDIRes.rc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

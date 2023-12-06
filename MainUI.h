@@ -29,7 +29,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr)
+    MainWindow()
     {
         setupUI();
         connectButtons();
@@ -38,6 +38,7 @@ public:
     {
 
     }
+    int New;
 
 private:
     SettingsUI settings;
@@ -58,10 +59,21 @@ private:
 
     void setupUI()
     {
+        New = 0;
         screen = QGuiApplication::primaryScreen();
 
         QFile FileSettings("Settings/file.txt");
-        FileSettings.open(QIODevice::ReadOnly);
+        if(!FileSettings.open(QIODevice::ReadOnly))
+        {
+            mkdir("Settings");
+            creat("Settings/file.txt", 0777);
+            FileSettings.open(QIODevice::ReadWrite);
+            QTextStream stream(&FileSettings);
+            stream<<"Ctrl+M, Ctrl+E, Ctrl+D";
+            FileSettings.close();
+            FileSettings.open(QIODevice::ReadOnly);
+            New = 1;
+        }
         QByteArray data3;
         data3 = FileSettings.readAll();
         FileSettings.close();
@@ -199,7 +211,7 @@ private slots:
 
     void LaunchSettingsUI()
     {
-        settings.move(screen->geometry().width()/2 - settings.width()/2, screen->geometry().height()/2 - settings.height()/2);
+        settings.move(screen->geometry().width()/2 - settings.width()/2, screen->geometry().height()/2.5 - settings.height()/2);
         settings.ResetFieldsSettings();
         settings.show();
     }
