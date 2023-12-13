@@ -13,4 +13,19 @@ Official releases of PCECDI are available as direct downloads from [GitHub](http
 
 ## Licence
 
-The Source code of PCECDI is under Gnu GPLv3 Licence and all the artwork is under CC0. If you not sure about the liscence of a file refer to the [COPYING](COPYING) file.
+### Scope
+
+This licensing document pertains to:
+
+- Official PCECDI releases
+
+- The TheGordonFreeman42 owned branch of the repositories on
+  https://github.com/TheGordonfreeman42/PCECDI including all their ancestor commits
+
+### Licensing Grant
+
+All source code files and all the artwork (as defined by the respective license) in scope of this document are under the GPL version 3
+or any later version, at your choice.
+
+The relevant license is provided in the [LISCENCE](LISCENCE) file in this
+package.
