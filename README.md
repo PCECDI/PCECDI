@@ -27,5 +27,5 @@ This licensing document pertains to:
 All source code files and all the artwork (as defined by the respective license) in scope of this document are under the GPL version 3
 or any later version, at your choice.
 
-The relevant license is provided in the [LISCENCE](LISCENCE) file in this
+The relevant license is provided in the [COPYING](COPYING) file in this
 package.
