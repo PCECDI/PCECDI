@@ -1,0 +1,18 @@
+# PCECDI Licensing
+
+## Scope
+
+This licensing document pertains to:
+
+- Official PCECDI releases
+
+- The TheGordonFreeman42 owned branch of the repositories on
+  https://github.com/TheGordonfreeman42/PCECDI including all their ancestor commits
+
+## Licensing Grant
+
+All source code files and all the artwork (as defined by the respective license) in scope of this document are under the GPL version 3
+or any later version, at your choice.
+
+The relevant license is provided in the file GPL-3 in this
+package.

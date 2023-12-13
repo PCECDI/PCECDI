@@ -9,6 +9,9 @@
 #include <QLabel>
 #include <QApplication>
 #include <QTextEdit>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QTextDocument>
 #include <QMessageBox>
 #include <QTextStream>
 #include <QFile>
@@ -61,24 +64,6 @@ private:
     {
         New = 0;
         screen = QGuiApplication::primaryScreen();
-
-        QFile FileSettings("Settings/file.txt");
-        if(!FileSettings.open(QIODevice::ReadOnly))
-        {
-            mkdir("Settings");
-            creat("Settings/file.txt", 0777);
-            FileSettings.open(QIODevice::ReadWrite);
-            QTextStream stream(&FileSettings);
-            stream<<"Ctrl+M, Ctrl+E, Ctrl+D";
-            FileSettings.close();
-            FileSettings.open(QIODevice::ReadOnly);
-            New = 1;
-        }
-        QByteArray data3;
-        data3 = FileSettings.readAll();
-        FileSettings.close();
-        QString data4 = QString("%1").arg(data3);
-
         QWidget *window = new QWidget;
         QIcon progIcon(":/Images/Icon.png");
         NomLineEdit = new QLineEdit(this);
@@ -88,7 +73,6 @@ private:
         QuitButton = new QPushButton("Quitter", this);
         ApplyButton = new QPushButton("Enregistrer", this);
         ToolsButton = new QPushButton("Outils", this);
-        shortcutMed = new QShortcut(QKeySequence(data4), this);
         shortcutFlemme = new QShortcut(QKeySequence(tr("Ctrl+M, Ctrl+I, Ctrl+C, Ctrl+H")), this);
         ComboBox1 = new QComboBox(this);
         Spacer = new QLabel(this);
@@ -109,7 +93,6 @@ private:
         TextEdit1->setFixedSize(800, 150);
 
         ToolsWidowStatus = 0;
-        ToolsButton->setDisabled(1);
         ResetFields();
         TextEdit1->setReadOnly(1);
         TextEdit1->setAlignment(Qt::AlignCenter);
@@ -161,7 +144,6 @@ private:
         QObject::connect(QuitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
         QObject::connect(ApplyButton, SIGNAL(clicked()), this, SLOT(Register()));
         QObject::connect(ToolsButton, SIGNAL(clicked()), this, SLOT(LaunchSettingsUI()));
-        QObject::connect(shortcutMed, SIGNAL(activated()), this, SLOT(Settings()));
         QObject::connect(shortcutFlemme, SIGNAL(activated()), this, SLOT(Mich()));
     }
 
@@ -198,6 +180,10 @@ private:
         ComboBox1->addItem("Faire du théâtre");
         ComboBox1->addItem("Aider Mme Noiret");
         ComboBox1->addItem("Exclusion");
+        ComboBox1->addItem("Dormir");
+        ComboBox1->addItem("S'informer");
+        ComboBox1->addItem("Club");
+        ComboBox1->addItem("Retard");
     }
 
 private slots:
@@ -216,28 +202,6 @@ private slots:
         settings.show();
     }
 
-    void Settings()
-    {
-        if(ToolsWidowStatus == 0)
-        {
-            ToolsWidowStatus = 1;
-            ToolsButton->setEnabled(1);
-            QMessageBox *message = new QMessageBox(this);
-            message->setWindowTitle("Dev Mode");
-            message->setText("<b>ATTENTION</b> : Le Mode Developpeur est activé !");
-            message->show();
-        }
-        else
-        {
-            ToolsWidowStatus = 0;
-            ToolsButton->setDisabled(1);
-            QMessageBox *message = new QMessageBox(this);
-            message->setWindowTitle("Dev Mode");
-            message->setText("<b>ATTENTION</b> : Le Mode Developpeur est désactivé !");
-            message->show();
-        }
-    }
-
     void Register()
     {
         bool ok;
@@ -246,7 +210,7 @@ private slots:
         QTime ProgTime = DateWithTime->time();
         QDate ProgDate = DateWithTime->date();
 
-        QString CSVFileName = QString("%1 %2.csv").arg(ProgDate.month(), 2, 10, QChar('0')).arg(ProgDate.year(), 4, 10, QChar('0'));
+        QString CSVFileName = QString("%1 %2.csv").arg(ProgDate.year(), 4, 10, QChar('0')).arg(ProgDate.month(), 2, 10, QChar('0'));
         QString ProgDate2 = QString("%1/%2/%3").arg(ProgDate.day(), 2, 10, QChar('0')).arg(ProgDate.month(), 2, 10, QChar('0')).arg(ProgDate.year(), 4, 10, QChar('0'));
         QString ProgTime2;
 
@@ -281,7 +245,6 @@ private slots:
                 break;
 
             case 12:
-                TextEdit1->append("Hello !");
                 if(compmin < 35) ProgTime2 = QString("11:35 - 12:35");
                 if(compmin >= 35) ProgTime2 = QString("12:35 - 13:00");
                 break;
@@ -310,7 +273,7 @@ private slots:
             creat("CSVFiles/"+CSVFileName.toUtf8(), 0777);
             CSVFile.open(QIODevice::ReadWrite | QIODevice::Text);
             QTextStream hellostream(&CSVFile);
-            QString line = "Heures :,Dates :,Noms :,Prénoms :,Classes :, Raisons :\n";
+            QString line = "Dates :,Heures :,Noms :,Prénoms :,Classes :, Raisons :\n";
             hellostream<<line;
             CSVFile.close();
             RebootRegister();
@@ -354,7 +317,7 @@ private slots:
 
                 CSVFile.close();
                 CSVFile.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Append);
-                QString line = ProgTime2 + "," + ProgDate2 + "," + nom + "," + prenom + "," + classe + "," + raison + "\n";
+                QString line = ProgDate2 + "," + ProgTime2 + "," + nom + "," + prenom + "," + classe + "," + raison + "\n";
                 QString heurelog = QString("%1:%2:%3").arg(compheure, 2, 10, QChar('0')).arg(compmin, 2, 10, QChar('0')).arg(compsec, 2, 10, QChar('0'));
                 QTextStream hellostream(&CSVFile);
                 hellostream<<line;
