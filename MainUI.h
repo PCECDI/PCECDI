@@ -184,6 +184,8 @@ private:
         ComboBox1->addItem("S'informer");
         ComboBox1->addItem("Club");
         ComboBox1->addItem("Retard");
+        ComboBox1->addItem("Professeur absent");
+        ComboBox1->addItem("Rendez-vous médical");
     }
 
 private slots:
