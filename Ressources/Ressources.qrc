@@ -7,7 +7,4 @@
         <file>TitleWithIcon.png</file>
         <file>WallPaper.jpg</file>
     </qresource>
-    <qresource prefix="/">
-        <file>Ressources.res</file>
-    </qresource>
 </RCC>

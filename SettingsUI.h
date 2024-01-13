@@ -5,16 +5,12 @@
 #include <QApplication>
 #include <QTabWidget>
 #include <QPushButton>
-#include <QPainter>
-#include <QProcess>
 #include <QLabel>
 #include <QSize>
 #include <QPixmap>
 #include <QTextEdit>
 #include <QGroupBox>
 #include <QDesktopServices>
-#include <QPrinter>
-#include <QPrintDialog>
 #include <QMessageBox>
 #include <QVBoxLayout>
 #include <QScreen>
@@ -60,6 +56,7 @@ private:
     QTextEdit *TextEdit2;
     QPushButton *OpenDirCSVButton;
     QPushButton *OpenDirExeButton;
+    QPushButton *OpenDirSettingsButton;
 
     void setupUI()
     {
@@ -71,6 +68,7 @@ private:
         TextEdit2 = new QTextEdit(this);
         CSVPath = new QLabel("Chemin du dossier\ndes fichiers CSV :", this);
         OpenDirCSVButton = new QPushButton("Ouvrir le dossier des fichiers CSV", this);
+        OpenDirSettingsButton = new QPushButton("Ouvrir le fichier des choix", this);
         OpenDirExeButton = new QPushButton("Ouvrir le dossier de l'éxecutable", this);
         AboutQt = new QPushButton("À Propos de Qt", this);
         TitleandIcon = new QLabel(this);
@@ -103,6 +101,7 @@ private:
         settingsGeneralLayout->addLayout(settingsGeneralLayoutH);
         settingsGeneralLayout->addWidget(OpenDirCSVButton);
         settingsGeneralLayout->addWidget(OpenDirExeButton);
+        settingsGeneralLayout->addWidget(OpenDirSettingsButton);
         settingsGeneralLayoutH->addWidget(CSVPath);
         settingsGeneralLayoutH->addWidget(TextEdit2);
         Credits->setAlignment(Qt::AlignHCenter);
@@ -118,10 +117,16 @@ private:
         QObject::connect(RestartButton, SIGNAL(clicked()), this, SLOT(restart()));
         QObject::connect(OpenDirCSVButton, SIGNAL(clicked()), this, SLOT(OpenCSVFile()));
         QObject::connect(OpenDirExeButton, SIGNAL(clicked()), this, SLOT(OpenExeFile()));
+        QObject::connect(OpenDirSettingsButton, SIGNAL(clicked()), this, SLOT(OpenSettingsFile()));
         QObject::connect(AboutQt, SIGNAL(clicked()), qApp, SLOT(aboutQt()));
     }
 
 private slots:
+    void OpenSettingsFile()
+    {
+        QDesktopServices::openUrl(QUrl(QDir::currentPath() + "/Settings/Choises.txt"));
+    }
+
     void quit()
     {
         close();

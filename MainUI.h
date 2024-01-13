@@ -9,9 +9,6 @@
 #include <QLabel>
 #include <QApplication>
 #include <QTextEdit>
-#include <QPrinter>
-#include <QPrintDialog>
-#include <QTextDocument>
 #include <QMessageBox>
 #include <QTextStream>
 #include <QFile>
@@ -42,6 +39,15 @@ public:
 
     }
     int New;
+
+    void Welcome()
+    {
+        QMessageBox *message = new QMessageBox;
+        message->setWindowTitle("Bienvenue");
+        message->setWindowIcon(QIcon(":/Images/Icon.png"));
+        message->setText("Bienvenue dans PCECDI !\nPCECDI a détécté que vous l'allumer pour la première fois.\nCe programme sert à classifier les élèves venant au Cdi.\nPour s'enregistrer il faut entrer un nom, un prénom, une classe et une raison.\nPour rajouter des raisons veuillez consulter le fichier \"Choises.txt\" contenu dans le dossier \"Settings\".");
+        message->show();
+    }
 
 private:
     SettingsUI settings;
@@ -163,29 +169,63 @@ private:
         PrenomLineEdit->setPlaceholderText("Prénom :");
         ClasseLineEdit->setPlaceholderText("Classe :");
 
-        ComboBox1->addItem("Travailler sur les postes");
-        ComboBox1->addItem("Dessiner");
-        ComboBox1->addItem("Apprendre");
-        ComboBox1->addItem("Lire");
-        ComboBox1->addItem("Faire un exposé");
-        ComboBox1->addItem("Voir des exposés");
-        ComboBox1->addItem("Jouer au jeux de sociétés");
-        ComboBox1->addItem("Jouer de la musique");
-        ComboBox1->addItem("Faire ses devoirs");
-        ComboBox1->addItem("Se connecter à l'ENT");
-        ComboBox1->addItem("Jouer à des escape games");
-        ComboBox1->addItem("Faire des recherches");
-        ComboBox1->addItem("Aider des élèves");
-        ComboBox1->addItem("Venir en tant que délégué CDI");
-        ComboBox1->addItem("Faire du théâtre");
-        ComboBox1->addItem("Aider Mme Noiret");
-        ComboBox1->addItem("Exclusion");
-        ComboBox1->addItem("Dormir");
-        ComboBox1->addItem("S'informer");
-        ComboBox1->addItem("Club");
-        ComboBox1->addItem("Retard");
-        ComboBox1->addItem("Professeur absent");
-        ComboBox1->addItem("Rendez-vous médical");
+        QFile FichierChoix("Settings/Choises.txt");
+        if(!FichierChoix.open(QIODevice::ReadOnly))
+        {
+            QDir DossierSettings("Settings");
+            if(!DossierSettings.exists()) mkdir("Settings");
+            creat("Settings/Choises.txt", 0777);
+            FichierChoix.open(QIODevice::ReadWrite | QIODevice::Text);
+            QTextStream FichierCroixStream(&FichierChoix);
+            FichierCroixStream<<"#Ce fichier contient tout les choses que on peut faire en venant au CDI !\n#La syntaxe est : le dièse (#) pour les commentaires et après un choix par ligne ! Merci !\n\n";
+            FichierCroixStream<<"Travailler sur les postes\n";
+            FichierCroixStream<<"Dessiner\n";
+            FichierCroixStream<<"Apprendre\n";
+            FichierCroixStream<<"Lire\n";
+            FichierCroixStream<<"Faire un exposé\n";
+            FichierCroixStream<<"Voir des exposés\n";
+            FichierCroixStream<<"Jouer au jeux de sociétés\n";
+            FichierCroixStream<<"Jouer de la musique\n";
+            FichierCroixStream<<"Faire ses devoirs\n";
+            FichierCroixStream<<"Se connecter à l'ENT\n";
+            FichierCroixStream<<"Jouer à des escape games\n";
+            FichierCroixStream<<"Faire des recherches\n";
+            FichierCroixStream<<"Aider des élèves\n";
+            FichierCroixStream<<"Venir en tant que délégué CDI\n";
+            FichierCroixStream<<"Faire du théâtre\n";
+            FichierCroixStream<<"Aider Mme Noiret\n";
+            FichierCroixStream<<"Exclusion\n";
+            FichierCroixStream<<"Dormir\n";
+            FichierCroixStream<<"S'informer\n";
+            FichierCroixStream<<"Club\n";
+            FichierCroixStream<<"Retard\n";
+            FichierCroixStream<<"Professeur absent\n";
+            FichierCroixStream<<"Rendez-vous médical\n";
+            FichierCroixStream<<"Heure de colle";
+            FichierChoix.close();
+            RebootResetFields();
+            New = 1;
+        }
+        else
+        {
+            FichierChoix.close();
+            FichierChoix.open(QIODevice::ReadOnly);
+            while (!FichierChoix.atEnd()) {
+                QByteArray line = FichierChoix.readLine();
+                if(!line.startsWith("#") && line != "\r\n")
+                {
+                    QString hello = QString("%1").arg(line);
+                    hello.remove("\r");
+                    hello.remove("\n");
+                    ComboBox1->addItem(hello);
+                }
+            }
+        }
+    }
+
+    void RebootResetFields()
+    {
+        ResetFields();
     }
 
 private slots:
