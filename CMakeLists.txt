@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(ProjectName PCECDI_v4.5)
+set(ProjectName PCECDI)
 project(${ProjectName} VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)

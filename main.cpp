@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QSplashScreen>
 #include <QPixmap>
+#include <QProcess>
 #include <QMessageBox>
 #include <windows.h>
 #include "MainUI.h"
