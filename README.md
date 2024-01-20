@@ -1,15 +1,15 @@
-[![GitHub release](https://img.shields.io/github/release/Stellarium/stellarium.svg)](https://github.com/Stellarium/stellarium/releases/latest)
-[![GitHub Release Date](https://img.shields.io/github/release-date/Stellarium/stellarium.svg)](https://github.com/Stellarium/stellarium/releases/latest)
-[![Github All Releases](https://img.shields.io/github/downloads/Stellarium/stellarium/total.svg)](https://github.com/Stellarium/stellarium/releases)
-[![Backers and sponsors](https://img.shields.io/opencollective/all/stellarium.svg?style=flat)](https://opencollective.com/stellarium)
-[![CI](https://github.com/Stellarium/stellarium/actions/workflows/ci.yml/badge.svg)](https://github.com/Stellarium/stellarium/actions/workflows/ci.yml)
-[![CI](https://github.com/Stellarium/stellarium/actions/workflows/ci-more.yml/badge.svg)](https://github.com/Stellarium/stellarium/actions/workflows/ci-more.yml)
-[![Build status](https://ci.appveyor.com/api/projects/status/sw8j9l8q95ejkalo?svg=true)](https://ci.appveyor.com/project/alex-w/stellarium)
-[![Coverage Status](https://coveralls.io/repos/github/Stellarium/stellarium/badge.svg)](https://coveralls.io/github/Stellarium/stellarium)
-[![CodeFactor](https://www.codefactor.io/repository/github/stellarium/stellarium/badge)](https://www.codefactor.io/repository/github/stellarium/stellarium)
-[![DOI:10.1558/jsa.17822](http://img.shields.io/badge/DOI-10.1558/jsa.17822-blue.svg)](https://doi.org/10.1558/jsa.17822)
-[![DOI:10.5281/zenodo.8105939](http://img.shields.io/badge/DOI-10.5281/zenodo.8105939-blue.svg)](https://doi.org/10.5281/zenodo.8105939)
 # PCECDI
+
+![GitHub License](https://img.shields.io/github/license/TheGordonFreeman42/PCECDI)
+![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/TheGordonFreeman42/PCECDI)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/TheGordonFreeman42/PCECDI/total)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/TheGordonFreeman42/PCECDI)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/TheGordonFreeman42/PCECDI/main)
+![GitHub commits since latest release (branch)](https://img.shields.io/github/commits-since/TheGordonFreeman42/PCECDI/latest/main)
+![GitHub Release](https://img.shields.io/github/v/release/TheGordonFreeman42/PCECDI)
+
+
+
 A ( Very ) Small Program for Student Classification 🤣 
 
 I created this program at home, to train for future bigger projects. It is used to classify students coming to the CDI.
