@@ -6,5 +6,9 @@
         <file>Title.png</file>
         <file>TitleWithIcon.png</file>
         <file>WallPaper.jpg</file>
+        <file>UpdaterIcon.ico</file>
+    </qresource>
+    <qresource prefix="/TextFiles">
+        <file>version.txt</file>
     </qresource>
 </RCC>

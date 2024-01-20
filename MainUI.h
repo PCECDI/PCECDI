@@ -68,6 +68,7 @@ private:
 
     void setupUI()
     {
+        deleteFilesWithText("", "PCECDI");
         New = 0;
         screen = QGuiApplication::primaryScreen();
         QWidget *window = new QWidget;
@@ -226,6 +227,39 @@ private:
     void RebootResetFields()
     {
         ResetFields();
+    }
+
+    void deleteFilesWithText(const QString& directory, const QString& searchText)
+    {
+        QDir dir(directory);
+        QStringList filters;
+        filters << "*.exe" << "*.zip"; // Filtre les fichiers avec l'extension .txt, vous pouvez changer cela selon vos besoins
+        dir.setNameFilters(filters);
+
+        QStringList fileList = dir.entryList();
+        foreach(const QString & file, fileList)
+        {
+            QFile currentFile(dir.absoluteFilePath(file));
+            QString executablePath = QCoreApplication::applicationFilePath();
+            QFileInfo fileInfo(executablePath);
+            QString executableName = fileInfo.fileName();
+            if(currentFile.fileName().contains(searchText) && currentFile.fileName().contains(executableName) == false)
+            {
+                currentFile.close();
+                if(currentFile.remove())
+                {
+                    qDebug() << "Fichier supprimé: " << file;
+                }
+                else
+                {
+                    qDebug() << "Échec de la suppression du fichier: " << file;
+                }
+            }
+            else
+            {
+                currentFile.close();
+            }
+        }
     }
 
 private slots:

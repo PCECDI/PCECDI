@@ -3,12 +3,16 @@
 #include <QPixmap>
 #include <QProcess>
 #include <QMessageBox>
+#include <QTimer>
 #include <windows.h>
 #include "MainUI.h"
+#include "Updater.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    Updater updater;
+
     MainWindow MainUI;
     QSplashScreen Splash;
     Splash.setPixmap(QPixmap(":/Images/SplashScreen.png"));
@@ -20,6 +24,12 @@ int main(int argc, char *argv[])
     {
         MainUI.Welcome();
     }
+
+    updater.show();
+    QTimer timer;
+    QObject::connect(&timer, &QTimer::timeout, [&updater]() {updater.LaunchUpdates();});
+    timer.setSingleShot(1);
+    timer.start(500);
     return app.exec();
 }
 
