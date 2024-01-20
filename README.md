@@ -1,12 +1,12 @@
 # PCECDI
 
-![GitHub License](https://img.shields.io/github/license/TheGordonFreeman42/PCECDI)
-![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/TheGordonFreeman42/PCECDI)
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/TheGordonFreeman42/PCECDI/total)
+[![GitHub Release](https://img.shields.io/github/v/release/TheGordonFreeman42/PCECDI)](https://github.com/TheGordonFreeman42/PCECDI/releases/latest)
+[![GitHub License](https://img.shields.io/github/license/TheGordonFreeman42/PCECDI)](https://github.com/TheGordonFreeman42/PCECDI/blob/main/COPYING)
+[![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/TheGordonFreeman42/PCECDI)](https://github.com/TheGordonFreeman42/PCECDI/releases/latest)
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/TheGordonFreeman42/PCECDI/total)](https://github.com/TheGordonFreeman42/PCECDI/releases)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/TheGordonFreeman42/PCECDI)
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/TheGordonFreeman42/PCECDI/main)
 ![GitHub commits since latest release (branch)](https://img.shields.io/github/commits-since/TheGordonFreeman42/PCECDI/latest/main)
-![GitHub Release](https://img.shields.io/github/v/release/TheGordonFreeman42/PCECDI)
 
 
 
