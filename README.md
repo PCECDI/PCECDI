@@ -1,4 +1,6 @@
-![PCECDI](https://socialify.git.ci/TheGordonFreeman42/PCECDI/image?font=Inter&name=1&pattern=Circuit%20Board&theme=Dark)
+  <p align="center">
+    <img alt="PCECDI" src="https://socialify.git.ci/TheGordonFreeman42/PCECDI/image?description=1&font=Inter&name=1&pattern=Circuit%20Board&theme=Dark"/>
+  </p>
   <p align="center">
     <img alt="License" src="https://img.shields.io/github/v/release/TheGordonFreeman42/PCECDI?display_name=release&style=for-the-badge"/>
     <img alt="Contributors" src="https://img.shields.io/github/license/TheGordonFreeman42/PCECDI?style=for-the-badge&logo=github" />
