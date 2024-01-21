@@ -1,8 +1,13 @@
 # PCECDI
+---
 
-[![GitHub Release](https://img.shields.io/github/v/release/TheGordonFreeman42/PCECDI?display_name=release&style=for-the-badge)](https://github.com/TheGordonFreeman42/PCECDI/releases/latest)
-[![GitHub License](https://img.shields.io/github/license/TheGordonFreeman42/PCECDI?style=for-the-badge&logo=github)](https://github.com/TheGordonFreeman42/PCECDI/blob/main/COPYING)
-[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/TheGordonFreeman42/PCECDI/total?style=for-the-badge)](https://github.com/TheGordonFreeman42/PCECDI/releases)
+  <p align="center">
+    <img alt="License" src="https://img.shields.io/github/v/release/TheGordonFreeman42/PCECDI?display_name=release&style=for-the-badge"/>
+    <img alt="Contributors" src="https://img.shields.io/github/license/TheGordonFreeman42/PCECDI?style=for-the-badge&logo=github" />
+    <img alt="Release" src="https://img.shields.io/github/downloads/TheGordonFreeman42/PCECDI/total?style=for-the-badge" />
+  </p>
+<p align="center">An open and lightweight modification to Windows, designed to optimize performance, privacy and security.</p>
+
 
 
 
