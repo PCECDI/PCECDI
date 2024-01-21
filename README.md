@@ -1,5 +1,3 @@
-# PCECDI
-
   <p align="center">
     <img alt="PCECDI" src="https://socialify.git.ci/TheGordonFreeman42/PCECDI/image?description=1&font=Inter&name=1&pattern=Circuit%20Board&theme=Dark">
   </p>
