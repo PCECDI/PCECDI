@@ -21,8 +21,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      uses: jurplel/install-qt-action@v3
+    - uses: jurplel/install-qt-action@v3
       with:
+        host: 'windows'
         setup-python: 'false'
         version: '6.6.0'
         install-deps: 'true'
