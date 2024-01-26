@@ -1,0 +1,7 @@
+Comment rajouter des choix dans Raison ?
+
+1) Naviguer jusqu'au dossier "Settings"
+2) Ouvrez "Choises.txt"
+3) Rajouter une ou plusieurs lignes tout en bas avec les choix que vous voulez rajouter
+4) Enregistrez le fichier
+5) Redémarrer PCECDI
