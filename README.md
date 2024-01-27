@@ -15,7 +15,7 @@ All PCECDI releases are build with Qt Creator. If you want to build your own rel
 
 ## Installing the program
 
-Official releases of PCECDI are available as direct downloads from [GitHub](https://github.com/TheGordonFreeman42/PCECDI/releases/latest). Then extract the zip that you just downloaded and launch the executable !
+Official releases of PCECDI are available as direct downloads from [GitHub](https://github.com/PCECDI/PCECDI/releases/latest). Then extract the zip that you just downloaded and launch the executable !
 
 ## Licence
 
@@ -25,8 +25,8 @@ This licensing document pertains to:
 
 - Official PCECDI releases
 
-- The TheGordonFreeman42 owned branch of the repositories on
-  https://github.com/TheGordonfreeman42/PCECDI including all their ancestor commits
+- The PCECDI owned branch of the repositories on
+  https://github.com/PCECDI/PCECDI including all their ancestor commits
 
 ### Licensing Grant
 
