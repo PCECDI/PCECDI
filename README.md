@@ -6,7 +6,7 @@
     <img alt="Contributors" src="https://img.shields.io/github/license/TheGordonFreeman42/PCECDI?style=for-the-badge&logo=github" >
     <img alt="Release" src="https://img.shields.io/github/downloads/TheGordonFreeman42/PCECDI/total?style=for-the-badge" />
   </p>
-<p align="center">A ( Very ) Small Program for Student Classification 🤣</p>
+<p align="center">A ( Very ) Small Program for the CDI 🤣</p>
 <p align="center">I created this program at home, to train for future bigger projects. It is used to classify students coming to the CDI.</p>
 
 ## Build from sources

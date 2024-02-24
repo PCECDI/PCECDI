@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(ProjectName PCECDI_v6)
+set(ProjectName PCECDI)
 project(${ProjectName} VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
@@ -10,14 +10,18 @@ set(CMAKE_CXX_COMPILER ${CMAKE_CXX_COMPILER})
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(PCECDI_TS_Files
+    Translations/PCECDI_fr.ts
+    Translations/PCECDI_ru.ts
+    Translations/PCECDI_de.ts
+)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network LinguistTools)
 
 set(PROJECT_SOURCES
         main.cpp
         MainUI.h
-        Updater.h
         SettingsUI.h
 	Ressources/Ressources.qrc
 )
@@ -51,6 +55,13 @@ set_target_properties(${ProjectName} PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
+
+set_source_files_properties(
+    ${PCECDI_TS_Files}
+    PROPERTIES OUTPUT_LOCATION "${CMAKE_CURRENT_BINARY_DIR}/translations"
+)
+
+qt_add_translations(PCECDI TS_FILES ${PCECDI_TS_Files})
 
 include(GNUInstallDirs)
 install(TARGETS ${ProjectName}

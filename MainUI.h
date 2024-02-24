@@ -23,6 +23,7 @@
 #include <QComboBox>
 #include <fcntl.h>
 #include "SettingsUI.h"
+#define VersionInfoText "CDIHP5MED_v6.5"
 
 class MainWindow : public QMainWindow
 {
@@ -31,6 +32,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow()
     {
+#ifndef VersionInfoText
+        qApp->quit();
+#endif
         setupUI();
         connectButtons();
     }
@@ -43,14 +47,15 @@ public:
     void Welcome()
     {
         QMessageBox *message = new QMessageBox;
-        message->setWindowTitle("Bienvenue");
+        message->setWindowTitle(tr("Welcome"));
         message->setWindowIcon(QIcon(":/Images/Icon.png"));
-        message->setText("Bienvenue dans PCECDI !\nPCECDI a détécté que vous l'allumer pour la première fois.\nCe programme sert à classifier les élèves venant au Cdi.\nPour s'enregistrer il faut entrer un nom, un prénom, une classe et une raison.\nPour rajouter des raisons veuillez consulter le fichier \"Choises.txt\" contenu dans le dossier \"Settings\".");
+        message->setText(tr("Welcome to PCECDI!\nPCECDI has detected that you are turning it on for the first time.\nThis program is used to classify students coming to the Cdi.\nTo register you must enter a name, a first name, a class and a reason. \nTo add reasons please consult the \"Choises.txt\" file contained in the \"Settings\" folder."));
         message->show();
     }
 
+    SettingsUI settings = SettingsUI(VersionInfoText);
+
 private:
-    SettingsUI settings;
     QLineEdit *NomLineEdit;
     QLineEdit *PrenomLineEdit;
     QLineEdit *ClasseLineEdit;
@@ -68,7 +73,6 @@ private:
 
     void setupUI()
     {
-        deleteFilesWithText("", "PCECDI");
         New = 0;
         screen = QGuiApplication::primaryScreen();
         QWidget *window = new QWidget;
@@ -77,10 +81,10 @@ private:
         PrenomLineEdit = new QLineEdit(this);
         ClasseLineEdit = new QLineEdit(this);
         TextEdit1 = new QTextEdit(this);
-        QuitButton = new QPushButton("Quitter", this);
-        ApplyButton = new QPushButton("Enregistrer", this);
-        ToolsButton = new QPushButton("Outils", this);
-        shortcutFlemme = new QShortcut(QKeySequence(tr("Ctrl+M, Ctrl+I, Ctrl+C, Ctrl+H")), this);
+        QuitButton = new QPushButton(tr("Quit"), this);
+        ApplyButton = new QPushButton(tr("Save"), this);
+        ToolsButton = new QPushButton(tr("Tools"), this);
+        shortcutFlemme = new QShortcut(QKeySequence("Ctrl+M, Ctrl+I, Ctrl+C, Ctrl+H"), this);
         ComboBox1 = new QComboBox(this);
         Spacer = new QLabel(this);
         Title = new QLabel(this);
@@ -103,7 +107,7 @@ private:
         ResetFields();
         TextEdit1->setReadOnly(1);
         TextEdit1->setAlignment(Qt::AlignCenter);
-        TextEdit1->append("Bienvenue dans PCECDI ! Merci à Mme Noiret pour l'idée de ce projet pour le CDI !\nRentrer votre nom, prénom , classe et enfin une raison afin d\'être enregistré.\n|----------------------------------------------------------------------------------------|\n");
+        TextEdit1->append(tr("Welcome to PCECDI!\nEnter your name, first name, class and finally a reason to be registered.\n|------------------------ -------------------------------------------------- --------------|\n"));
         TextEdit1->setAlignment(Qt::AlignLeft);
 
         QVBoxLayout *layout = new QVBoxLayout(window);
@@ -137,7 +141,7 @@ private:
         setWindowIcon(progIcon);
         setWindowTitle("PCECDI");
         setMinimumSize(820, 450);
-        TextEdit1->append("[PCECDI] Le programme s'est lancé avec succès. ");
+        TextEdit1->append(tr("[PCECDI] The program launched successfully."));
 
         QPixmap bkgnd(":/Images/WallPaper.jpg");
         bkgnd = bkgnd.scaled(screen->size(), Qt::IgnoreAspectRatio);
@@ -165,10 +169,10 @@ private:
         PrenomLineEdit->setText("");
         ClasseLineEdit->setText("");
         ComboBox1->clear();
-        ComboBox1->setPlaceholderText("Je suis venu(e) au CDI pour...");
-        NomLineEdit->setPlaceholderText("Nom :");
-        PrenomLineEdit->setPlaceholderText("Prénom :");
-        ClasseLineEdit->setPlaceholderText("Classe :");
+        ComboBox1->setPlaceholderText(tr("I come to the CDI to..."));
+        NomLineEdit->setPlaceholderText(tr("Name :"));
+        PrenomLineEdit->setPlaceholderText(tr("First name :"));
+        ClasseLineEdit->setPlaceholderText(tr("Class :"));
 
         QFile FichierChoix("Settings/Choises.txt");
         if(!FichierChoix.open(QIODevice::ReadOnly))
@@ -229,46 +233,13 @@ private:
         ResetFields();
     }
 
-    void deleteFilesWithText(const QString& directory, const QString& searchText)
-    {
-        QDir dir(directory);
-        QStringList filters;
-        filters << "*.exe" << "*.zip"; // Filtre les fichiers avec l'extension .txt, vous pouvez changer cela selon vos besoins
-        dir.setNameFilters(filters);
-
-        QStringList fileList = dir.entryList();
-        foreach(const QString & file, fileList)
-        {
-            QFile currentFile(dir.absoluteFilePath(file));
-            QString executablePath = QCoreApplication::applicationFilePath();
-            QFileInfo fileInfo(executablePath);
-            QString executableName = fileInfo.fileName();
-            if(currentFile.fileName().contains(searchText) && currentFile.fileName().contains(executableName) == false)
-            {
-                currentFile.close();
-                if(currentFile.remove())
-                {
-                    qDebug() << "Fichier supprimé: " << file;
-                }
-                else
-                {
-                    qDebug() << "Échec de la suppression du fichier: " << file;
-                }
-            }
-            else
-            {
-                currentFile.close();
-            }
-        }
-    }
-
 private slots:
     void Mich()
     {
         NomLineEdit->setText("Durand");
         PrenomLineEdit->setText("Michel");
         ClasseLineEdit->setText("4C");
-        ComboBox1->setCurrentIndex(0);
+        ComboBox1->setCurrentIndex(13);
     }
 
     void LaunchSettingsUI()
@@ -360,27 +331,27 @@ private slots:
             {
                 if(nom == "")
                 {
-                    NomLineEdit->setPlaceholderText("Vide...");
+                    NomLineEdit->setPlaceholderText(tr("Empty..."));
                 }
                 if(prenom == "")
                 {
-                    PrenomLineEdit->setPlaceholderText("Vide...");
+                    PrenomLineEdit->setPlaceholderText(tr("Empty..."));
                 }
                 if(classe == "" || classe.size() != 2)
                 {
                     ClasseLineEdit->setText("");
-                    ClasseLineEdit->setPlaceholderText("La classe doit être un chiffre puis une lettre.");
+                    ClasseLineEdit->setPlaceholderText(tr("The class must be a number then a letter."));
                 }
                 if(raison == "")
                 {
-                    ComboBox1->setPlaceholderText("Veuillez choisir un option...");
+                    ComboBox1->setPlaceholderText(tr("Please choose an option..."));
                 }
             }
             else
             {
                 if(raison == "Travailler sur les postes" || raison == "Se connecter à l'ENT")
                 {
-                    int numposte = QInputDialog::getInt(this, tr("Numéro de Poste"), tr("Entre ton numéro de poste :"), 1, 1, 9, 1, &ok);
+                    int numposte = QInputDialog::getInt(this, tr("Computer number"), tr("Enter your computer number:"), 1, 1, 9, 1, &ok);
                     if (ok && !numposte == 0)
                     {
                         raison = QString("%1 - poste : %2").arg(raison).arg(numposte);
@@ -398,7 +369,7 @@ private slots:
                 QTextStream hellostream(&CSVFile);
                 hellostream<<line;
                 CSVFile.close();
-                TextEdit1->append(QString("[PCECDI] [%1] Élève %2 %3 en %4 à %5, le %6. Qui est venu(e) pour %7 enregistré(e) avec succès !").arg(heurelog, nom, prenom, classe, ProgTime2, ProgDate2, raison));
+                TextEdit1->append(QString(tr("[PCECDI] [%1] Student %2 %3 in %4 to %5, on %6. Who came for %7 successfully registered !")).arg(heurelog, nom, prenom, classe, ProgTime2, ProgDate2, raison));
                 ResetFields();
             }
         }
