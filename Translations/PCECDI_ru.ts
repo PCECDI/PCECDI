@@ -81,9 +81,16 @@ Enter your name, first name, class and finally a reason to be registered.
         <source>[PCECDI] [%1] Student %2 %3 in %4 to %5, on %6. Who came for %7 successfully registered !</source>
         <translation>[PCECDI] [%1] Ученик %2 %3 в %4–%5, на %6. Кто пришёл для %7, успешно зарегистрировался!</translation>
     </message>
+</context>
+<context>
+    <name>QApplication</name>
     <message>
-        <source>[PCECDI] The program launched successfully.</source>
-        <translation>[PCECDI] Программа успешно запущена.</translation>
+        <source>A ( Very ) Small Program for the CDI !</source>
+        <translation>(Очень) мaлeнкая программа для CDI !</translation>
+    </message>
+    <message>
+        <source>By TheGordonFreeman42</source>
+        <translation>Автор: TheGordonFreeman42</translation>
     </message>
 </context>
 <context>
@@ -101,10 +108,6 @@ path:</source>
     <message>
         <source>Open CSV files folder</source>
         <translation>Открыть папку с CSV файлами</translation>
-    </message>
-    <message>
-        <source>Open the choices file</source>
-        <translation>Открыть файл выборов</translation>
     </message>
     <message>
         <source>Open the executable folder</source>
@@ -143,16 +146,19 @@ This program was created with Qt. For more info:
         <source>Tools</source>
         <translation>Настройки</translation>
     </message>
-</context>
-<context>
-    <name>QApplication</name>
     <message>
-        <source>A ( Very ) Small Program for the CDI !</source>
-        <translation>(Очень) мaлeнкая программа для CDI !</translation>
+        <source>Add a choice</source>
+        <translation>Добавить выбор</translation>
     </message>
     <message>
-        <source>By TheGordonFreeman42</source>
-        <translation>Автор: TheGordonFreeman42</translation>
+        <source>Enter the choice you want to add :</source>
+        <translation>Введите выбор, который вы хотите добавить :</translation>
+    </message>
+    <message>
+        <source>You have changed the PCECDI settings !
+Do you want to restart the program to apply the changes?</source>
+        <translation>Вы изменили настройки PCECDI !
+Хотите перезагрузить программу, чтобы применить изменения ?</translation>
     </message>
 </context>
 </TS>

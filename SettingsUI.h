@@ -11,6 +11,7 @@
 #include <QTextEdit>
 #include <QGroupBox>
 #include <QProcess>
+#include <QInputDialog>
 #include <QTranslator>
 #include <QLineEdit>
 #include <QDesktopServices>
@@ -21,7 +22,7 @@
 #include <QDir>
 #include <QComboBox>
 #include <QRect>
-#include <fcntl.h>
+#include "XmlReader.h"
 
 class SettingsUI : public QWidget
 {
@@ -80,7 +81,7 @@ private:
         TextEdit2->setFixedWidth(266);
         ResetComboBoxLanguage();
         OpenDirCSVButton = new QPushButton(tr("Open CSV files folder"), this);
-        OpenDirSettingsButton = new QPushButton(tr("Open the choices file"), this);
+        OpenDirSettingsButton = new QPushButton(tr("Add a choice"), this);
         OpenDirExeButton = new QPushButton(tr("Open the executable folder"), this);
         VersionInfo = new QLineEdit(this);
         AboutQt = new QPushButton(tr("About Qt"), this);
@@ -139,7 +140,7 @@ private:
         QObject::connect(OpenDirExeButton, SIGNAL(clicked()), this, SLOT(OpenExeFile()));
         QObject::connect(OpenDirSettingsButton, SIGNAL(clicked()), this, SLOT(OpenSettingsFile()));
         QObject::connect(AboutQt, SIGNAL(clicked()), qApp, SLOT(aboutQt()));
-        QObject::connect(LanguageCombo, SIGNAL(activated(int)), this, SLOT(ChangeLanguage()));
+        QObject::connect(LanguageCombo, SIGNAL(activated(int)), this, SLOT(askForRestart()));
     }
 
     void ResetComboBoxLanguage()
@@ -151,46 +152,38 @@ private:
         LanguageCombo->addItem("Русский");
     }
 
-private slots:
     void ChangeLanguage()
     {
-        QFile FichierChoix2("Settings/Language.txt");
-        if(FichierChoix2.open(QIODevice::ReadWrite | QIODevice::Text))
+        int hello = LanguageCombo->currentIndex();
+        switch (hello)
         {
-            QTextStream FichierCroixStream2(&FichierChoix2);
-            int hello = LanguageCombo->currentIndex();
-            switch (hello)
-            {
-                case 0:   // Français
-                    FichierCroixStream2<<"fr";
-                    break;
+            case 0:   // Français
+                XmlReader("Settings/settings.xml").changeLanguageInSettings("fr");
+                break;
 
-                case 1:   // English
-                    FichierCroixStream2<<"en";
-                    break;
+            case 1:   // English
+                XmlReader("Settings/settings.xml").changeLanguageInSettings("en");
+                break;
 
-                case 2:   // Deutsch
-                    FichierCroixStream2<<"de";
-                    break;
+            case 2:   // Deutsch
+                XmlReader("Settings/settings.xml").changeLanguageInSettings("de");
+                break;
 
-                case 3:   // Русский
-                    FichierCroixStream2<<"ru";
-                    break;
+            case 3:   // Русский
+                XmlReader("Settings/settings.xml").changeLanguageInSettings("ru");
+                break;
 
-                default:
-                    break;
-            }
-            FichierChoix2.close();
+            default:
+                break;
         }
-        qApp->quit();
-        QProcess process;
-        process.startDetached("PCECDI.exe");
-        process.waitForFinished(-1);
     }
 
+private slots:
     void OpenSettingsFile()
     {
-        QDesktopServices::openUrl(QUrl(QDir::currentPath() + "/Settings/Choises.txt"));
+        bool ok;
+        XmlReader("Settings/settings.xml").ajouterBaliseText(QInputDialog::getText(this, tr("Add a choice"), tr("Enter the choice you want to add :"), QLineEdit::Normal, "", &ok));
+        if(ok == 1) askForRestart();
     }
 
     void quit()
@@ -201,6 +194,39 @@ private slots:
     void restart()
     {
         close();
+    }
+
+    void askForRestart()
+    {
+        QProcess process;
+        QMessageBox msgBox(this);
+        msgBox.setWindowTitle("PCECDI");
+        msgBox.setText(tr("You have changed the PCECDI settings !\nDo you want to restart the program to apply the changes?"));
+        msgBox.setIcon(QMessageBox::Information);
+        QPushButton *AcceptButton = msgBox.addButton("OK", QMessageBox::AcceptRole);
+        QPushButton *RejectButton = msgBox.addButton(tr("Cancel"), QMessageBox::RejectRole);
+
+        msgBox.exec();
+
+        if (msgBox.clickedButton() == AcceptButton)
+        {
+            ChangeLanguage();
+            qApp->quit();
+            process.startDetached("PCECDI.exe");
+            process.waitForFinished(-1);
+
+        }
+        else if (msgBox.clickedButton() == RejectButton)
+        {
+            // Do Nothing
+        }
+
+        QString Lang;
+        Lang = XmlReader("Settings/settings.xml").lireContenuBalise("settings", "language");
+        if(Lang == "fr") LanguageCombo->setCurrentIndex(0);
+        if(Lang == "en") LanguageCombo->setCurrentIndex(1);
+        if(Lang == "de") LanguageCombo->setCurrentIndex(2);
+        if(Lang == "ru") LanguageCombo->setCurrentIndex(3);
     }
 
     void OpenExeFile()

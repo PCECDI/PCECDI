@@ -6,55 +6,27 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <windows.h>
+#include <QDomElement>
 #include "MainUI.h"
+#include "XmlReader.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     QApplication::setStyle("windowsvista");
-    QFile FichierChoix2("Settings/Language.txt");
+
     QString Lang;
-    if(!FichierChoix2.open(QIODevice::ReadOnly))
-    {
-        QDir DossierSettings2("Settings");
-        if(!DossierSettings2.exists()) mkdir("Settings");
-        creat("Settings/Language.txt", 0777);
-        FichierChoix2.open(QIODevice::ReadWrite | QIODevice::Text);
-        QTextStream FichierCroixStream2(&FichierChoix2);
-        FichierCroixStream2<<"fr";
-        Lang = "fr";
-        FichierChoix2.close();
-    }
-    else
-    {
-        FichierChoix2.close();
-        FichierChoix2.open(QIODevice::ReadOnly);
-        QByteArray line = FichierChoix2.readLine();
-        if(!line.startsWith("#") && line != "\r\n")
-        {
-            Lang = line;
-        }
-    }
+    Lang = XmlReader("Settings/settings.xml").lireContenuBalise("settings", "language");
+
     QTranslator translator;
     if (translator.load(QLocale(Lang), "PCECDI", "_", "translations") && Lang != "en")
         QApplication::installTranslator(&translator);
     MainWindow MainUI;
-    if(Lang == "fr")
-    {
-        MainUI.settings.LanguageCombo->setCurrentIndex(0);
-    }
-    if(Lang == "en")
-    {
-        MainUI.settings.LanguageCombo->setCurrentIndex(1);
-    }
-    if(Lang == "de")
-    {
-        MainUI.settings.LanguageCombo->setCurrentIndex(2);
-    }
-    if(Lang == "ru")
-    {
-        MainUI.settings.LanguageCombo->setCurrentIndex(3);
-    }
+
+    if(Lang == "fr") MainUI.settings.LanguageCombo->setCurrentIndex(0);
+    if(Lang == "en") MainUI.settings.LanguageCombo->setCurrentIndex(1);
+    if(Lang == "de") MainUI.settings.LanguageCombo->setCurrentIndex(2);
+    if(Lang == "ru") MainUI.settings.LanguageCombo->setCurrentIndex(3);
 
     QImage image(":/Images/SplashScreen.png");
     QPainter painter(&image);
@@ -62,13 +34,12 @@ int main(int argc, char *argv[])
     font.setItalic(1);
     painter.setFont(font);
     painter.setPen(QPen(Qt::white));
-    painter.drawText(18, 120, QApplication::tr("A ( Very ) Small Program for the CDI !"));
-    painter.drawText(18, 160, QApplication::tr("By TheGordonFreeman42"));
-    painter.drawText(445, 160, "v6.5");
-    QPixmap pixmap = QPixmap::fromImage(image);
+    painter.drawText(20, 120, QApplication::tr("A ( Very ) Small Program for the CDI !"));
+    painter.drawText(20, 160, QApplication::tr("By TheGordonFreeman42"));
+    painter.drawText(330, 160, "v6.5");
 
     QSplashScreen Splash;
-    Splash.setPixmap(pixmap);
+    Splash.setPixmap(QPixmap::fromImage(image));
     Splash.show();
     Sleep(3000);
     MainUI.showMaximized();
@@ -77,6 +48,7 @@ int main(int argc, char *argv[])
     {
         MainUI.Welcome();
     }
+
     return app.exec();
 }
 

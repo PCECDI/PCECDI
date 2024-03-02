@@ -20,9 +20,11 @@
 #include <QDateTime>
 #include <QPalette>
 #include <QShortcut>
+#include <QStatusBar>
 #include <QComboBox>
 #include <fcntl.h>
 #include "SettingsUI.h"
+#include "XmlReader.h"
 #define VersionInfoText "CDIHP5MED_v6.5"
 
 class MainWindow : public QMainWindow
@@ -141,7 +143,6 @@ private:
         setWindowIcon(progIcon);
         setWindowTitle("PCECDI");
         setMinimumSize(820, 450);
-        TextEdit1->append(tr("[PCECDI] The program launched successfully."));
 
         QPixmap bkgnd(":/Images/WallPaper.jpg");
         bkgnd = bkgnd.scaled(screen->size(), Qt::IgnoreAspectRatio);
@@ -174,57 +175,9 @@ private:
         PrenomLineEdit->setPlaceholderText(tr("First name :"));
         ClasseLineEdit->setPlaceholderText(tr("Class :"));
 
-        QFile FichierChoix("Settings/Choises.txt");
-        if(!FichierChoix.open(QIODevice::ReadOnly))
-        {
-            QDir DossierSettings("Settings");
-            if(!DossierSettings.exists()) mkdir("Settings");
-            creat("Settings/Choises.txt", 0777);
-            FichierChoix.open(QIODevice::ReadWrite | QIODevice::Text);
-            QTextStream FichierCroixStream(&FichierChoix);
-            FichierCroixStream<<"#Ce fichier contient tout les choses que on peut faire en venant au CDI !\n#La syntaxe est : le dièse (#) pour les commentaires et après un choix par ligne ! Merci !\n\n";
-            FichierCroixStream<<"Travailler sur les postes\n";
-            FichierCroixStream<<"Dessiner\n";
-            FichierCroixStream<<"Apprendre\n";
-            FichierCroixStream<<"Lire\n";
-            FichierCroixStream<<"Faire un exposé\n";
-            FichierCroixStream<<"Voir des exposés\n";
-            FichierCroixStream<<"Jouer au jeux de sociétés\n";
-            FichierCroixStream<<"Jouer de la musique\n";
-            FichierCroixStream<<"Faire ses devoirs\n";
-            FichierCroixStream<<"Se connecter à l'ENT\n";
-            FichierCroixStream<<"Jouer à des escape games\n";
-            FichierCroixStream<<"Faire des recherches\n";
-            FichierCroixStream<<"Aider des élèves\n";
-            FichierCroixStream<<"Venir en tant que délégué CDI\n";
-            FichierCroixStream<<"Faire du théâtre\n";
-            FichierCroixStream<<"Aider Mme Noiret\n";
-            FichierCroixStream<<"Exclusion\n";
-            FichierCroixStream<<"Dormir\n";
-            FichierCroixStream<<"S'informer\n";
-            FichierCroixStream<<"Club\n";
-            FichierCroixStream<<"Retard\n";
-            FichierCroixStream<<"Professeur absent\n";
-            FichierCroixStream<<"Rendez-vous médical\n";
-            FichierCroixStream<<"Heure de colle";
-            FichierChoix.close();
-            RebootResetFields();
-            New = 1;
-        }
-        else
-        {
-            FichierChoix.close();
-            FichierChoix.open(QIODevice::ReadOnly);
-            while (!FichierChoix.atEnd()) {
-                QByteArray line = FichierChoix.readLine();
-                if(!line.startsWith("#") && line != "\r\n")
-                {
-                    QString hello = QString("%1").arg(line);
-                    hello.remove("\r");
-                    hello.remove("\n");
-                    ComboBox1->addItem(hello);
-                }
-            }
+        QStringList ChoicesList = XmlReader("Settings/settings.xml").getTextFromChoices();
+        for(int i = 0; i < ChoicesList.size(); i++) {
+            ComboBox1->addItem(ChoicesList.at(i));
         }
     }
 
@@ -329,37 +282,22 @@ private slots:
         {
             if(nom == "" || prenom == "" || classe == "" || raison == "" || classe.size() != 2)
             {
-                if(nom == "")
-                {
-                    NomLineEdit->setPlaceholderText(tr("Empty..."));
-                }
-                if(prenom == "")
-                {
-                    PrenomLineEdit->setPlaceholderText(tr("Empty..."));
-                }
+                if(nom == "") NomLineEdit->setPlaceholderText(tr("Empty..."));
+                if(prenom == "") PrenomLineEdit->setPlaceholderText(tr("Empty..."));
                 if(classe == "" || classe.size() != 2)
                 {
                     ClasseLineEdit->setText("");
                     ClasseLineEdit->setPlaceholderText(tr("The class must be a number then a letter."));
                 }
-                if(raison == "")
-                {
-                    ComboBox1->setPlaceholderText(tr("Please choose an option..."));
-                }
+                if(raison == "") ComboBox1->setPlaceholderText(tr("Please choose an option..."));
             }
             else
             {
                 if(raison == "Travailler sur les postes" || raison == "Se connecter à l'ENT")
                 {
                     int numposte = QInputDialog::getInt(this, tr("Computer number"), tr("Enter your computer number:"), 1, 1, 9, 1, &ok);
-                    if (ok && !numposte == 0)
-                    {
-                        raison = QString("%1 - poste : %2").arg(raison).arg(numposte);
-                    }
-                    else
-                    {
-                        return;
-                    }
+                    if (ok && !numposte == 0) raison = QString("%1 - poste : %2").arg(raison).arg(numposte);
+                    else return;
                 }
 
                 CSVFile.close();
