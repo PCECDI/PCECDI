@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     painter.setPen(QPen(Qt::white));
     painter.drawText(20, 120, QApplication::tr("A ( Very ) Small Program for the CDI !"));
     painter.drawText(20, 160, QApplication::tr("By TheGordonFreeman42"));
-    painter.drawText(330, 160, "v6.5");
+    painter.drawText(300, 160, "v7");
 
     QSplashScreen Splash;
     Splash.setPixmap(QPixmap::fromImage(image));

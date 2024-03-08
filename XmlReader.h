@@ -15,24 +15,36 @@ public:
         if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             file.close();
-            m_xmlDocument.setContent("<?xml version='1.0' encoding='UTF-8'?><!DOCTYPE xcdi><xcdi version=\"1.0\"><info><progName>PCECDI</progName><progAuthor>TheGordonFreeman42</progAuthor></info><settings><language>fr</language></settings><choices><text>Travailler sur les postes</text><text>Dessiner</text><text>Apprendre</text><text>Lire</text><text>Faire un exposé</text><text>Voir des exposés</text><text>Jouer au jeux de sociétés</text><text>Jouer de la musique</text><text>Faire ses devoirs</text><text>Se connecter à l'ENT</text><text>Jouer à des escape games</text><text>Faire des recherches</text><text>Aider des élèves</text><text>Venir en tant que délégué CDI</text><text>Faire du théâtre</text><text>Aider Mme Noiret</text><text>Exclusion</text><text>Dormir</text><text>S'informer</text><text>Club</text><text>Retard</text><text>Professeur absent</text><text>Rendez-vous médical</text><text>Heure de colle</text></choices></xcdi>");
-            saveToFile();
+            SetContent();
         }
         else
         {
             QByteArray data = file.readAll();
             m_xmlDocument.setContent(data);
             file.close();
+            CheckForXcdi();
         }
-        getVersionAttribute();
     }
 
-    void getVersionAttribute()
+    void SetContent()
+    {
+        m_xmlDocument.setContent("<?xml version='1.0' encoding='UTF-8'?><!DOCTYPE xcdi><xcdi version=\"1\"><info><progName>PCECDI</progName><progAuthor>TheGordonFreeman42</progAuthor></info><settings><language>fr</language></settings><choices><text>Travailler sur les postes</text><text>Dessiner</text><text>Apprendre</text><text>Lire</text><text>Faire un exposé</text><text>Voir des exposés</text><text>Jouer au jeux de sociétés</text><text>Jouer de la musique</text><text>Faire ses devoirs</text><text>Se connecter à l'ENT</text><text>Jouer à des escape games</text><text>Faire des recherches</text><text>Aider des élèves</text><text>Venir en tant que délégué CDI</text><text>Faire du théâtre</text><text>Aider Mme Noiret</text><text>Exclusion</text><text>Dormir</text><text>S'informer</text><text>Club</text><text>Retard</text><text>Professeur absent</text><text>Rendez-vous médical</text><text>Heure de colle</text></choices></xcdi>");
+        saveToFile();
+    }
+
+    void CheckForXcdi()
     {
         QDomElement xcdi = m_xmlDocument.documentElement();
+        QString version;
+        QString tagName;
 
         if(!xcdi.isNull()) {
-            QString version = xcdi.attribute("version");
+            version = xcdi.attribute("version");
+            tagName = xcdi.tagName();
+        }
+        if(version != "1" || tagName != "xcdi")
+        {
+            SetContent();
         }
     }
 

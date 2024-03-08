@@ -25,7 +25,7 @@
 #include <fcntl.h>
 #include "SettingsUI.h"
 #include "XmlReader.h"
-#define VersionInfoText "CDIHP5MED_v6.5"
+#define VersionInfoText "CDIHP5MED_v7"
 
 class MainWindow : public QMainWindow
 {
