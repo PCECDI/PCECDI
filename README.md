@@ -7,7 +7,7 @@
     <img alt="Release" src="https://img.shields.io/github/downloads/TheGordonFreeman42/PCECDI/total?style=for-the-badge" />
   </p>
 <p align="center">A ( Very ) Small Program for the CDI 🤣</p>
-<p align="center">I created this program at home, to train for future bigger projects. It is used to classify students coming to the CDI.</p>
+<p align="center">I created this program at home, to train for future bigger projects. It is used to classify students coming to the CDI.<br>If you have questions about anything check the official PCECDI wiki : <a href="https://github.com/PCECDI/PCECDI/wiki">https://github.com/PCECDI/PCECDI/wiki</a></p>
 
 ## Build from sources
 
@@ -30,7 +30,7 @@ This licensing document pertains to:
 
 ### Licensing Grant
 
-All source code files and all the artwork (as defined by the respective license) in scope of this document are under the GPL version 3
+All source code files and all the artwork (as defined by the respective license) in scope of this document are under the [GPL version 3](https://www.gnu.org/licenses/gpl-3.0.html)
 or any later version, at your choice.
 
 The relevant license is provided in the [COPYING](COPYING) file in this
