@@ -35,3 +35,5 @@ or any later version, at your choice.
 
 The relevant license is provided in the [COPYING](COPYING) file in this
 package.
+
+**_TheGordonFreeman42_**
