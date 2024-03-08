@@ -7,7 +7,7 @@
     <img alt="Release" src="https://img.shields.io/github/downloads/TheGordonFreeman42/PCECDI/total?style=for-the-badge" />
   </p>
 <p align="center">A ( Very ) Small Program for the CDI 🤣</p>
-<p align="center">A ( Very ) Small Program for the CDI 🤣 ! This little program will help anyone who wants to be able to classify people coming to a college place or organization. It allows you to register based on your last name, first name and class as well as choosing a reason ! I created this program at home, to train for future bigger projects.<br>If you have questions about anything check the official PCECDI wiki : <a href="https://github.com/PCECDI/PCECDI/wiki">https://github.com/PCECDI/PCECDI/wiki</a></p>
+<p align="center">This little program will help anyone who wants to be able to classify people coming to a college place or organization. It allows you to register based on your last name, first name and class as well as choosing a reason ! I created this program at home, to train for future bigger projects.<br>If you have questions about anything check the official PCECDI wiki : <a href="https://github.com/PCECDI/PCECDI/wiki">https://github.com/PCECDI/PCECDI/wiki</a></p>
 
 ## Build from sources
 
